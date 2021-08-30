@@ -57,9 +57,9 @@ class Crawler:
         # time.sleep(60)
 
         for cat in all_categories:
-            time.sleep(30)
+            time.sleep(60)
             self.t = self.generate_token()
-            print()
+            # print()
             self.items[cat] = {}
             self.enc_cat = self.str_check(cat)
 
@@ -71,8 +71,6 @@ class Crawler:
                     time.sleep(30)
                     self.t = self.generate_token()
 
-                self.payload = {}
-
                 self.h = {
                     'Content-Type': 'application/json',
                     'Authorization': f'Bearer {self.t}'
@@ -81,10 +79,10 @@ class Crawler:
                 # support for pagination
                 self.url = f'https://public-apis-api.herokuapp.com/api/v1/apis/entry?page={i}&category={self.enc_cat}'
                 self.r = requests.request(
-                    "GET", url=self.url, headers=self.h, data=self.payload)
+                    "GET", url=self.url, headers=self.h)
 
-                print("category = ", cat, "code = ",
-                      self.r.status_code, "page = ", i)
+                # print("category = ", cat, "code = ",
+                #   self.r.status_code, "page = ", i)
                 self.c = self.c+1
 
                 if self.r.status_code != 200:
@@ -97,7 +95,7 @@ class Crawler:
                 for j in range(len(self.d)):
                     self.items[cat][self.d[j]['API']] = self.d[j]['Link']
 
-                print(self.r.json())
+                # print(self.r.json())
                 # if (self.r.headers['X-Ratelimit-Remaining'] == 1):
                 # time.sleep(60)
                 #self.t = self.generate_token()
@@ -122,12 +120,16 @@ class Crawler:
 
 crawler = Crawler()
 token = crawler.generate_token()
+print("Crawler started")
+print("Fetching all api links")
+print("Estimated time is 50 minutes. Please wait while this program completes")
 categories = crawler.get_all_categories(token)
 all_categories = crawler.flatten_list(categories)
 items = crawler.get_all_links(all_categories)
 my_dict = items
 conn = sqlite3.connect("api_links.db")
 curr = conn.cursor()
+print("Database created")
 curr.execute(""" DROP TABLE IF EXISTS api_links""")
 curr.execute(""" CREATE TABLE api_links(
     category text,
@@ -140,3 +142,5 @@ for cat in all_categories:
 
 conn.commit()
 conn.close()
+print("Database populated")
+print("Crawled all links. Program ends")
