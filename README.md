@@ -1,7 +1,7 @@
 ﻿# public_api_crawler
  
  # About
-This is a repository which crawls the list of all the api links present in the repository https://github.com/public-apis/public-apis and stores them in a database without using any scraping methods.
+This is a repository which crawls the list of all the api links present in the repository https://github.com/public-apis/public-apis and stores them in a database without using any scraping methods using it's api (Documentation here : https://documenter.getpostman.com/view/4796420/SzmZczsh?version=latest).
 
 # Steps to run code
 
