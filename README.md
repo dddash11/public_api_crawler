@@ -21,18 +21,10 @@ The schema is
 - api (datatype text)
 - link (datatype text)
 
-# Features (Points Achieved)
+# Features
 
 - OOPS Code
 - pagination support
 - Support for handling authentication requirements & token expiration of server
 - work around for rate limited server
 - Crawled all API entries for all categories and stored it in a database
-
-# Points didn't achieve
-
-All points achieved
-
-# Further improvements
-
-The code could have been containerized with Docker support if additional time would have been there
